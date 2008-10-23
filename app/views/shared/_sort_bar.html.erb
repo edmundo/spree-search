@@ -1,0 +1,57 @@
+<table>
+<tr>
+
+<td>
+  <%= t("sort_by") %>:
+</td>
+
+<td>&nbsp;</td>
+
+<td>
+  <%= link_to t("name"), {
+    :search => params[:search],
+    :order_by => "name",
+    :side => (params[:side] == "asc") ? "desc" : "asc",
+    :p => params[:p]
+  } -%>
+</td>
+<td>
+  <% if params[:order_by] == "name" && params[:side] -%> 
+    <%= params[:side] == "asc" ? t("asc") : t("desc") %>
+  <% end -%>
+</td>
+
+<td>&nbsp;</td>
+
+<td>
+  <%= link_to t("price"), {
+    :search => params[:search],
+    :order_by => "master_price",
+    :side => (params[:side] == "asc") ? "desc" : "asc",
+    :p => params[:p]
+  } -%>
+</td>
+<td>
+  <% if params[:order_by] == "master_price" && params[:side] -%> 
+    <%= params[:side] == "asc" ? t("asc") : t("desc") %>
+  <% end -%>
+</td>
+
+<td>&nbsp;</td>
+
+<td class="sort_item">
+    <%= link_to t("date"), {
+      :search => params[:search],
+      :order_by => "available_on",
+      :side => (params[:side] == "asc") ? "desc" : "asc",
+      :p => params[:p]
+    } -%>
+</td>
+<td>
+  <% if params[:order_by] == "available_on" && params[:side] -%> 
+    <%= params[:side] == "asc" ? t("asc") : t("desc") %>
+  <% end -%>
+</td>
+
+</tr>
+</table>

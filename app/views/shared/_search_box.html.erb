@@ -1,0 +1,16 @@
+<!-- search box -->
+<% if controller.controller_name == 'taxons'
+  search_path_local = taxon_path(params[:id])
+else
+  search_path_local = products_path
+end -%>
+
+<br/>
+<div style="text-align: center;">
+<% form_tag search_path_local, :id => 'search_form', :method => 'get' do %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag t("search") %>
+<% end %>
+<%= link_to(t("advanced"), new_search_path) %>
+</div>
+<br/>
