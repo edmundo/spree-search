@@ -12,3 +12,9 @@ It can be tested using the following route:
 
 It has basic sort support for products, by default the only view that has it working is the result of the extended search, but it can be included in all the rest of the application including the main view and the view by current taxon.
 
+
+Plugins needed:
+active_record_base_without_table
+
+Use the current edge version:
+ruby script/plugin install http://svn.viney.net.nz/things/branches/active_record_base_without_table_edge
