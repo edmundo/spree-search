@@ -23,7 +23,7 @@ class TaxonChooser
     
     def populate(taxonomy)
       taxonomy.root.children.each do |taxon|
-        self.include_taxon_tree(taxonomy, taxon, 1)
+        self.include_taxon_tree(taxonomy, taxon, 0)
       end
     end
 

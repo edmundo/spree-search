@@ -9,7 +9,7 @@ end -%>
 <div style="text-align: center;">
 <% form_tag search_path_local, :id => 'search_form', :method => 'get' do %>
   <%= text_field_tag :search, params[:search] %>
-  <%= submit_tag t("search") %>
+  <%= submit_tag t("search"), :name => nil %>
 <% end %>
 <%= link_to(t("advanced"), new_search_path) %>
 </div>
