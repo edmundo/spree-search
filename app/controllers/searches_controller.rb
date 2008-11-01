@@ -11,7 +11,7 @@ class SearchesController < Admin::BaseController
   
   def create
     @search = Search.new(params[:search])
-#    if @search.valid?
+    if @search.valid?
       
       # Build the custom parameters hash and don't clutter the url with empty params.
       temp = {}
@@ -21,9 +21,9 @@ class SearchesController < Admin::BaseController
       temp.merge!(:keywords => params["search"]["keywords"]) if !params["search"]["keywords"].empty?
       
       redirect_to temp.merge(:action => 'show')
-#    else
-#      render :action => 'new'
-#    end
+    else
+      render :action => 'new'
+    end
   end
   
   def show

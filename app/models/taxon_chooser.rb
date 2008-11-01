@@ -1,5 +1,13 @@
 class TaxonChooser
-  TaxonOption = Struct.new(:id, :name)
+
+  class TaxonOption
+    attr_reader :id, :name
+
+    def initialize(id, name)
+      @id = id
+      @name = name
+    end
+  end
   
   class TaxonType
     attr_reader :type_name, :options
@@ -12,6 +20,20 @@ class TaxonChooser
     def <<(option)
       @options << option
     end
+    
+    def populate(taxonomy)
+      taxonomy.root.children.each do |taxon|
+        self.include_taxon_tree(taxonomy, taxon, 1)
+      end
+    end
+
+    def include_taxon_tree(taxonomy, taxon, level)
+      self <<  TaxonOption.new(taxon.id, "-" * level + taxon.name)
+      taxon.children.each do |subtaxon|
+        include_taxon_tree(taxonomy, subtaxon, level + 1)
+      end
+    end
+
   end
   
   OPTIONS = []
@@ -19,9 +41,8 @@ class TaxonChooser
   taxonomies = Taxonomy.find(:all, :include => {:root => :children})
   taxonomies.each do |taxonomy|
     a_taxonomy = TaxonType.new(taxonomy.root.name)
-    taxonomy.root.children.each do |taxon|
-      a_taxonomy <<  TaxonOption.new(taxon.id, taxon.name)
-    end
+    a_taxonomy.populate(taxonomy)
     OPTIONS << a_taxonomy
   end
+  
 end
