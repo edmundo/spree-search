@@ -28,7 +28,7 @@ class TaxonChooser
     end
 
     def include_taxon_tree(taxonomy, taxon, level)
-      self <<  TaxonOption.new(taxon.id, "-" * level + taxon.name)
+      self <<  TaxonOption.new(taxon.id, "&nbsp;" * level * 4 + taxon.name)
       taxon.children.each do |subtaxon|
         include_taxon_tree(taxonomy, subtaxon, level + 1)
       end
