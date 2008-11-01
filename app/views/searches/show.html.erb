@@ -1,7 +1,7 @@
 <div id="product-listing">
   <%= t("advanced_product_search") %>
   <br/><br/>
-  <%= render :partial => 'shared/sort_bar' %>
+  <%= render :partial => 'shared/advanced_search_sort_bar' %>
   <br/>
   <%= render :partial => "shared/products.html.erb", :locals => {:products => @products } %>
 </div>
@@ -10,4 +10,4 @@
   	<%= render :partial => "shared/taxonomies" %>
   </td>
 <% end %>
-<%= render :partial => 'shared/paginate', :locals => {:collection => @products, :options => {}} unless @products.empty? %>
+<%= render :partial => 'shared/advanced_search_paginate', :locals => {:collection => @products, :options => {}} unless @products.empty? %>
