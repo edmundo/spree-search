@@ -18,3 +18,4 @@ asc: Crescente
 desc: Decrescente
 belonging_to: Pertencendo a
 any_classification: Qualquer classificação
+include_subtaxons: Incluir subclassificações na procura

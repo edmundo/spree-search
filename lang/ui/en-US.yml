@@ -17,3 +17,4 @@ asc: Ascending
 desc: Descending
 belonging_to: Belonging to
 any_classification: Any classification
+include_subtaxons: Include subclassifications in the search

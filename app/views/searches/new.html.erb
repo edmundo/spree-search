@@ -22,6 +22,10 @@
     </select>
   </p>
   <p>
+    <%= t("include_subtaxons") %>:<br/>
+      <%= f.check_box :include_subtaxons %>
+  </p>
+  <p>
     <%= t("minimum_price") %>:<br/>
     <%= f.text_field :minimum_price %>
   </p>

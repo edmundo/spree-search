@@ -1,9 +1,11 @@
-class Search < ActiveRecord::BaseWithoutTable
+class Search < ActiveRecord::Base
+  has_no_table
 
   column :keywords, :string
   column :taxon_id, :integer
   column :minimum_price, :float
   column :maximum_price, :float
+  column :include_subtaxons, :boolean
   
   def conditions
     [conditions_clauses.join(' AND '), *conditions_options]
