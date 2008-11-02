@@ -60,18 +60,20 @@ class SearchesController < Admin::BaseController
     
     an_array = []
     add_subtaxons(an_array, Taxon.find(@search.taxon_id)) if @search.taxon_id
-
+    
     count_query = "
       SELECT count(products.id) FROM products
       INNER JOIN products_taxons ON (products.id = products_taxons.product_id)
       INNER JOIN taxons ON (products_taxons.taxon_id = taxons.id)
-      WHERE taxons.id IN (#{an_array.join(',').to_s})"
+      WHERE taxons.id IN (#{an_array.join(',').to_s})
+      #{(conditions.empty? ? "" : " AND ")} #{conditions}"
             
     query = "
       SELECT products.* FROM products
       INNER JOIN products_taxons ON (products.id = products_taxons.product_id)
       INNER JOIN taxons ON (products_taxons.taxon_id = taxons.id)
-      WHERE taxons.id IN (#{an_array.join(',').to_s})"
+      WHERE taxons.id IN (#{an_array.join(',').to_s})
+      #{(conditions.empty? ? "" : " AND ")} #{conditions} ORDER BY #{@sort_by}"
  
  
     if @search.include_subtaxons
