@@ -23,15 +23,15 @@
   </p>
   <p>
     <%= t("include_subtaxons") %>:<br/>
-      <%= f.check_box :include_subtaxons %>
+      <%= f.check_box :subtaxons %>
   </p>
   <p>
     <%= t("minimum_price") %>:<br/>
-    <%= f.text_field :minimum_price %>
+    <%= f.text_field :min_price %>
   </p>
   <p>
     <%= t("maximum_price") %>:<br/>
-    <%= f.text_field :maximum_price %>
+    <%= f.text_field :max_price %>
   </p>
   <p><%= f.submit "Submit" %></p>
 <% end %>

@@ -2,7 +2,7 @@
   # Build the custom parameters hash and don't clutter the url with empty params.
   temp = {}
   temp.merge!(:taxon => params[:taxon]) if !params[:taxon].nil? && !params[:taxon].empty?
-  temp.merge!(:include_subtaxons => params[:include_subtaxons]) if params[:include_subtaxons] != "0"
+  temp.merge!(:subtaxons => params[:subtaxons]) if params[:subtaxons] != "0"
   temp.merge!(:min_price => params[:min_price]) if !params[:min_price].nil? && !params[:min_price].empty?
   temp.merge!(:max_price => params[:max_price]) if !params[:max_price].nil? && !params[:max_price].empty?
   temp.merge!(:keywords => params[:keywords]) if !params[:keywords].nil? && !params[:keywords].empty?

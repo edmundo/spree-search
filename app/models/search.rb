@@ -3,9 +3,9 @@ class Search < ActiveRecord::Base
 
   column :keywords, :string
   column :taxon_id, :integer
-  column :minimum_price, :float
-  column :maximum_price, :float
-  column :include_subtaxons, :boolean
+  column :min_price, :float
+  column :max_price, :float
+  column :subtaxons, :boolean
   
   def conditions
     [conditions_clauses.join(' AND '), *conditions_options]
@@ -17,12 +17,12 @@ class Search < ActiveRecord::Base
       ["products.name LIKE ?", "%#{keywords}%"] unless keywords.blank?
     end
     
-    def minimum_price_conditions
-      ["products.master_price >= ?", minimum_price] unless minimum_price.blank?
+    def min_price_conditions
+      ["products.master_price >= ?", minimum_price] unless min_price.blank?
     end
     
-    def maximum_price_conditions
-      ["products.master_price <= ?", maximum_price] unless maximum_price.blank?
+    def max_price_conditions
+      ["products.master_price <= ?", maximum_price] unless max_price.blank?
     end
     
     def conditions_clauses

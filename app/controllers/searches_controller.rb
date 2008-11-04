@@ -1,4 +1,4 @@
-class SearchesController < Admin::BaseController
+class SearchesController < Spree::BaseController
   layout 'application'
   helper :taxons, :products
 
@@ -16,9 +16,9 @@ class SearchesController < Admin::BaseController
       # Build the custom parameters hash and don't clutter the url with empty params.
       temp = {}
       temp.merge!(:taxon => params["search"]["taxon_id"]) if !params["search"]["taxon_id"].empty?
-      temp.merge!(:include_subtaxons => params["search"]["include_subtaxons"]) if !params["search"]["include_subtaxons"].empty?
-      temp.merge!(:min_price => params["search"]["minimum_price"]) if !params["search"]["minimum_price"].empty?
-      temp.merge!(:max_price => params["search"]["maximum_price"]) if !params["search"]["maximum_price"].empty?
+      temp.merge!(:subtaxons => params["search"]["subtaxons"]) if !params["search"]["subtaxons"].empty?
+      temp.merge!(:min_price => params["search"]["min_price"]) if !params["search"]["min_price"].empty?
+      temp.merge!(:max_price => params["search"]["max_price"]) if !params["search"]["max_price"].empty?
       temp.merge!(:keywords => params["search"]["keywords"]) if !params["search"]["keywords"].empty?
       
       redirect_to temp.merge(:action => 'show')
@@ -32,9 +32,9 @@ class SearchesController < Admin::BaseController
 
     @search = Search.new({
       :taxon_id => params[:taxon],
-      :include_subtaxons => params[:include_subtaxons],
-      :minimum_price => params[:min_price],
-      :maximum_price => params[:max_price],
+      :subtaxons => params[:subtaxons],
+      :min_price => params[:min_price],
+      :max_price => params[:max_price],
       :keywords => params[:keywords]
     })
     # Verify if theres any ondition.
@@ -76,17 +76,19 @@ class SearchesController < Admin::BaseController
       #{(conditions.empty? ? "" : " AND ")} #{conditions} ORDER BY #{@sort_by}"
  
  
-    if @search.include_subtaxons
-      @products ||= Product.paginating_sql_find(
-        count_query, query, {:page_size => products_per_page, :current => params[:p]}
-      )
-    elsif @search.taxon_id
-      @products ||= Taxon.find(@search.taxon_id).products.available.find(
-        :all,
-        :conditions => conditions,
-        :order => @sort_by,
-        :page => {:start => 1, :size => products_per_page, :current => params[:p]},
-        :include => :images)
+    if @search.taxon_id
+      if @search.subtaxons
+        @products ||= Product.paginating_sql_find(
+          count_query, query, {:page_size => products_per_page, :current => params[:p]}
+        )
+      else
+        @products ||= Taxon.find(@search.taxon_id).products.available.find(
+          :all,
+          :conditions => conditions,
+          :order => @sort_by,
+          :page => {:start => 1, :size => products_per_page, :current => params[:p]},
+          :include => :images)
+      end
     else
       @products ||= Product.available.by_name(params[:search]).find(
         :all,
