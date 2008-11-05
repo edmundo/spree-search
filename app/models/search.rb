@@ -6,6 +6,9 @@ class Search < ActiveRecord::Base
   column :min_price, :float
   column :max_price, :float
   column :subtaxons, :boolean
+
+  validates_numericality_of :min_price, :unless => Proc.new { |search| search.min_price.nil? }
+  validates_numericality_of :max_price, :unless => Proc.new { |search| search.max_price.nil? }
   
   def conditions
     [conditions_clauses.join(' AND '), *conditions_options]
@@ -18,11 +21,11 @@ class Search < ActiveRecord::Base
     end
     
     def min_price_conditions
-      ["products.master_price >= ?", minimum_price] unless min_price.blank?
+      ["products.master_price >= ?", min_price] unless min_price.blank?
     end
     
     def max_price_conditions
-      ["products.master_price <= ?", maximum_price] unless max_price.blank?
+      ["products.master_price <= ?", max_price] unless max_price.blank?
     end
     
     def conditions_clauses

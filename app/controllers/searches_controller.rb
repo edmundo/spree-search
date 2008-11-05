@@ -16,7 +16,7 @@ class SearchesController < Spree::BaseController
       # Build the custom parameters hash and don't clutter the url with empty params.
       temp = {}
       temp.merge!(:taxon => params["search"]["taxon_id"]) if !params["search"]["taxon_id"].empty?
-      temp.merge!(:subtaxons => params["search"]["subtaxons"]) if !params["search"]["subtaxons"].empty?
+      temp.merge!(:subtaxons => params["search"]["subtaxons"]) if params["search"]["subtaxons"] == "1"
       temp.merge!(:min_price => params["search"]["min_price"]) if !params["search"]["min_price"].empty?
       temp.merge!(:max_price => params["search"]["max_price"]) if !params["search"]["max_price"].empty?
       temp.merge!(:keywords => params["search"]["keywords"]) if !params["search"]["keywords"].empty?
