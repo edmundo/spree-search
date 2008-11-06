@@ -6,20 +6,20 @@ class SearchesController < Spree::BaseController
   end
   
   def new
-    @search = Search.new
+    @advanced_search = Search.new
   end
   
   def create
-    @search = Search.new(params[:search])
-    if @search.valid?
+    @advanced_search = Search.new(params[:advanced_search])
+    if @advanced_search.valid?
       
       # Build the custom parameters hash and don't clutter the url with empty params.
       temp = {}
-      temp.merge!(:taxon => params["search"]["taxon_id"]) if !params["search"]["taxon_id"].empty?
-      temp.merge!(:subtaxons => params["search"]["subtaxons"]) if params["search"]["subtaxons"] == "1"
-      temp.merge!(:min_price => params["search"]["min_price"]) if !params["search"]["min_price"].empty?
-      temp.merge!(:max_price => params["search"]["max_price"]) if !params["search"]["max_price"].empty?
-      temp.merge!(:keywords => params["search"]["keywords"]) if !params["search"]["keywords"].empty?
+      temp.merge!(:taxon => params["advanced_search"]["taxon_id"]) if !params["advanced_search"]["taxon_id"].empty?
+      temp.merge!(:subtaxons => params["advanced_search"]["subtaxons"]) if params["advanced_search"]["subtaxons"] == "1"
+      temp.merge!(:min_price => params["advanced_search"]["min_price"]) if !params["advanced_search"]["min_price"].empty?
+      temp.merge!(:max_price => params["advanced_search"]["max_price"]) if !params["advanced_search"]["max_price"].empty?
+      temp.merge!(:keywords => params["advanced_search"]["keywords"]) if !params["advanced_search"]["keywords"].empty?
       
       redirect_to temp.merge(:action => 'show')
     else
@@ -30,7 +30,7 @@ class SearchesController < Spree::BaseController
   def show
     products_per_page = 4
 
-    @search = Search.new({
+    @advanced_search = Search.new({
       :taxon_id => params[:taxon],
       :subtaxons => params[:subtaxons],
       :min_price => params[:min_price],
@@ -38,7 +38,7 @@ class SearchesController < Spree::BaseController
       :keywords => params[:keywords]
     })
     # Verify if theres any ondition.
-    conditions = @search.conditions
+    conditions = @advanced_search.conditions
     if conditions == [""]
       conditions = ""
     end
@@ -56,10 +56,10 @@ class SearchesController < Spree::BaseController
     # Set it to what is allowed or default.
     @sort_by = sort_params[params[:sort]] || "available_on DESC"
     
-    @search_param = "- #{:searching_by.l_with_args({ :search_term => params[:search] })}" if params[:search]
+    @search_param = "- #{:searching_by.l_with_args({ :search_term => params[:advanced_search] })}" if params[:advanced_search]
     
     an_array = []
-    add_subtaxons(an_array, Taxon.find(@search.taxon_id)) if @search.taxon_id
+    add_subtaxons(an_array, Taxon.find(@advanced_search.taxon_id)) if @advanced_search.taxon_id
     
     count_query = "
       SELECT count(products.id) FROM products
@@ -76,13 +76,13 @@ class SearchesController < Spree::BaseController
       #{(conditions.empty? ? "" : " AND ")} #{conditions} ORDER BY #{@sort_by}"
  
  
-    if @search.taxon_id
-      if @search.subtaxons
+    if @advanced_search.taxon_id
+      if @advanced_search.subtaxons
         @products ||= Product.paginating_sql_find(
           count_query, query, {:page_size => products_per_page, :current => params[:p]}
         )
       else
-        @products ||= Taxon.find(@search.taxon_id).products.available.find(
+        @products ||= Taxon.find(@advanced_search.taxon_id).products.available.find(
           :all,
           :conditions => conditions,
           :order => @sort_by,
@@ -90,7 +90,7 @@ class SearchesController < Spree::BaseController
           :include => :images)
       end
     else
-      @products ||= Product.available.by_name(params[:search]).find(
+      @products ||= Product.available.by_name(params[:advanced_search]).find(
         :all,
         :conditions => conditions,
         :order => @sort_by,

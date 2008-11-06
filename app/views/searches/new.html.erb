@@ -4,20 +4,20 @@
   </td>
 <% end %>
 
-<% form_for @search do |f| %>
+<% form_for @advanced_search do |f| %>
   <p>
     <%= t("keywords") %>:<br/>
     <%= f.text_field :keywords %>
   </p>
   <p>
     <%= t("belonging_to") %>:<br/>
-    <select name="search[taxon_id]" id="search_taxon_id" >
+    <select name="advanced_search[taxon_id]" id="advanced_search_taxon_id" >
       <option value=""><%= t("any_classification")%></option>
       <%= option_groups_from_collection_for_select(
         TaxonChooser::OPTIONS,
         :options, :type_name, # <- groups
         :id, :name,           # <- items
-        @search.taxon_id
+        @advanced_search.taxon_id
       ) %>
     </select>
   </p>
