@@ -16,3 +16,5 @@ It has basic sort support for products, by default the only view that has it wor
 gems needed:
 activerecord-tableless
 
+
+You need to uncomment two methods (that builds the products collection) on search_extension.rb to make simple search work.
