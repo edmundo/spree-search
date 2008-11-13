@@ -16,6 +16,89 @@ class SearchExtension < Spree::Extension
   end
 
   def activate
+# Uncomment those methods to make the simple search work for products and inside taxons
+#    ProductsController.class_eval do
+#      private
+#      
+#      def collection
+#        products_per_page = 20
+#
+#        search = Search.new({
+#          :taxon_id => params[:taxon],
+#          :min_price => params[:min_price],
+#          :max_price => params[:max_price],
+#          :keywords => params[:search]
+#        })
+#        # Verify if theres any ondition.
+#        conditions = search.conditions
+#        if conditions == [""]
+#          conditions = ""
+#        end
+#    
+#        # Define what is allowed.
+#        sort_params = {
+#          "price_asc" => "master_price ASC",
+#          "price_desc" => "master_price DESC",
+#          "date_asc" => "available_on ASC",
+#          "date_desc" => "available_on DESC",
+#          "name_asc" => "name ASC",
+#          "name_desc" => "name DESC"
+#        }
+#        # Set it to what is allowed or default.
+#        @sort_by = sort_params[params[:sort]] || "available_on DESC"
+#        
+#        @search_param = "- #{:searching_by.l_with_args({ :search_term => params[:search] })}" if params[:search]
+#        
+#        @collection ||= Product.available.by_name(params[:search]).find(
+#          :all,
+#          :conditions => conditions,
+#          :order => @sort_by,
+#          :page => {:start => 1, :size => products_per_page, :current => params[:p]},
+#          :include => :images)
+#      end
+#    end
+#
+#    TaxonsController.class_eval do
+#      private
+#      
+#      def load_data
+#        products_per_page = 20
+#    
+#        search = Search.new({
+#          :taxon_id => params[:taxon],
+#          :min_price => params[:min_price],
+#          :max_price => params[:max_price],
+#          :keywords => params[:search]
+#        })
+#        # Verify if theres any ondition.
+#        conditions = search.conditions
+#        if conditions == [""]
+#          conditions = ""
+#        end
+#    
+#        # Define what is allowed.
+#        sort_params = {
+#          "price_asc" => "master_price ASC",
+#          "price_desc" => "master_price DESC",
+#          "date_asc" => "available_on ASC",
+#          "date_desc" => "available_on DESC",
+#          "name_asc" => "name ASC",
+#          "name_desc" => "name DESC"
+#        }
+#        # Set it to what is allowed or default.
+#        @sort_by = sort_params[params[:sort]] || "available_on DESC"
+#        
+#        @search_param = "- #{:searching_by.l_with_args({ :search_term => params[:search] })}" if params[:search]
+#        
+#        @products ||= object.products.available.by_name(params[:search]).find(
+#          :all,
+#          :conditions => conditions,
+#          :order => @sort_by,
+#          :page => {:start => 1, :size => products_per_page, :current => params[:p]},
+#          :include => :images)
+#      end
+#    end
+    
     # Add pagination support for the find_by_sql method inside paginating_find plugin.
     PaginatingFind::ClassMethods.class_eval do
       def paginating_sql_find(count_query, query, options)
@@ -50,13 +133,8 @@ class SearchExtension < Spree::Extension
         @extension_links << {:link =>  '#' , :link_text => Globalite.localize(:ext_search), :description => Globalite.localize(:ext_search_description)}
       end
     end
-    # admin.tabs.add "Search", "/admin/search", :after => "Layouts", :visibility => [:all]
   end
   
-  def deactivate
-    # admin.tabs.remove "Search"
-  end
-
   def self.require_gems(config)
     config.gem 'activerecord-tableless', :lib => 'tableless'
   end
