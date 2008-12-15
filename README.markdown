@@ -1,7 +1,16 @@
-= Search
+# Search
 
 This is an extension that adds sort and search support for products inside Spree.
 
+## Install
+      script/extension install git://github.com/edmundo/spree-search.git
+
+You need to uncomment two methods (that builds the products collection) on search_extension.rb to make simple search work.
+
+## Actual state
+Production ready.
+
+# Functionality
 It includes basic name search that is suggested to be putted in a layout. It can be used in the main page or inside a taxon.
 It can be tested using the following route:
 /search/test
@@ -12,9 +21,22 @@ It can be tested using the following route:
 
 It has basic sort support for products, by default the only view that has it working is the result of the extended search, but it can be included in all the rest of the application including the main view and the view by current taxon.
 
-
-gems needed:
+#gems needed
 activerecord-tableless
 
+#Screenshots
 
-You need to uncomment two methods (that builds the products collection) on search_extension.rb to make simple search work.
+Samples to show what you can do with it, (layout customization is not included).
+
+Simple search
+<br/><br/>
+<img src="http://i498.photobucket.com/albums/rr350/edmundo_vn/spree-search_simple.png" style="border: 1px solid #CCC;" />
+
+Sort support
+<br/><br/>
+<img src="http://i498.photobucket.com/albums/rr350/edmundo_vn/spree-search_sort.png" style="border: 1px solid #CCC;" />
+
+Advanced search
+<br/><br/>
+<img src="http://i498.photobucket.com/albums/rr350/edmundo_vn/spree-search_advanced.png" style="border: 1px solid #CCC;" />
+
