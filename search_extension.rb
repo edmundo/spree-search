@@ -2,7 +2,7 @@
 require_dependency 'application'
 
 class SearchExtension < Spree::Extension
-  version "0.1"
+  version "0.99"
   description "Search and sort extension for spree."
   url "http://github.com/edmundo/spree-search/tree/master"
 
@@ -49,7 +49,7 @@ class SearchExtension < Spree::Extension
 #        
 #        @search_param = "- #{:searching_by.l_with_args({ :search_term => params[:search] })}" if params[:search]
 #        
-#        @collection ||= Product.available.by_name(params[:search]).find(
+#        @collection ||= Product.active.by_name(params[:search]).find(
 #          :all,
 #          :conditions => conditions,
 #          :order => @sort_by,
@@ -90,7 +90,7 @@ class SearchExtension < Spree::Extension
 #        
 #        @search_param = "- #{:searching_by.l_with_args({ :search_term => params[:search] })}" if params[:search]
 #        
-#        @products ||= object.products.available.by_name(params[:search]).find(
+#        @products ||= object.products.active.by_name(params[:search]).find(
 #          :all,
 #          :conditions => conditions,
 #          :order => @sort_by,
