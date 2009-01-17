@@ -1,0 +1,20 @@
+en-US:
+  ext:
+    search:
+      extension_name: Search and Sort
+      extension_description: Support for searching and sorting products.
+
+      advanced_product_search: Advanced Product Search
+      advanced: Advanced
+      any_classification: Any classification
+      asc: Ascending
+      belonging_to: Belonging to
+      desc: Descending
+      include_subtaxons: Include subclassifications in the search
+      keywords: Keywords
+      maximum_price: Maximum price
+      minimum_price: Minimum price
+      search: Search
+      searching_by: Searching for '{{search_term}}'
+      send: Send
+      sort_by: Sort by

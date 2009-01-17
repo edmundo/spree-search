@@ -4,34 +4,34 @@
   </td>
 <% end %>
 
-<% form_for @advanced_search do |f| %>
+<% form_for @search do |f| %>
   <p>
-    <%= t("keywords") %>:<br/>
+    <%= t('ext.search.keywords') %>:<br/>
     <%= f.text_field :keywords %>
   </p>
   <p>
-    <%= t("belonging_to") %>:<br/>
-    <select name="advanced_search[taxon_id]" id="advanced_search_taxon_id" >
-      <option value=""><%= t("any_classification")%></option>
+    <%= t('ext.search.belonging_to') %>:<br/>
+    <select name="search[taxon_id]" id="search_taxon_id" >
+      <option value=""><%= t('ext.search.any_classification')%></option>
       <%= option_groups_from_collection_for_select(
         TaxonChooser::OPTIONS,
         :options, :type_name, # <- groups
         :id, :name,           # <- items
-        @advanced_search.taxon_id
+        @search.taxon_id
       ) %>
     </select>
   </p>
   <p>
-    <%= t("include_subtaxons") %>:<br/>
+    <%= t('ext.search.include_subtaxons') %>:<br/>
       <%= f.check_box :subtaxons %>
   </p>
   <p>
-    <%= t("minimum_price") %>:<br/>
+    <%= t('ext.search.minimum_price') %>:<br/>
     <%= f.text_field :min_price %>
   </p>
   <p>
-    <%= t("maximum_price") %>:<br/>
+    <%= t('ext.search.maximum_price') %>:<br/>
     <%= f.text_field :max_price %>
   </p>
-  <p><%= f.submit "Submit" %></p>
+  <p><%= f.submit t('ext.search.send') %></p>
 <% end %>

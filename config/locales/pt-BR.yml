@@ -1,0 +1,21 @@
+pt-BR:
+  ext:
+    search:
+      extension_name: Procura e Ordenação
+      extension_description: Suporte a procura e ordenação de produtos.
+
+      advanced_product_search: Procura Avançada de Produtos
+      advanced: Avançada
+      any_classification: Qualquer classificação
+      asc: Crescente
+      belonging_to: Pertencendo a
+      desc: Decrescente
+      include_subtaxons: Incluir subclassificações na procura
+      keywords: Palavras-chave
+      maximum_price: Preço máximo
+      minimum_price: Preço mínimo
+      search: Procurar
+      searching_by: Procurando por '{{search_term}}'
+      send: Enviar
+      sort_by: Ordenar por
+

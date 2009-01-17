@@ -13,45 +13,45 @@
 <tr>
 
 <td>
-  <%= t("sort_by") %>:
+  <%= t('ext.search.sort_by') %>:
 </td>
 
 <td>&nbsp;</td>
 
 <td>
-  <%= link_to t("name"),
+  <%= link_to t('name'),
     temp.merge(:sort => "name_#{@sort_by.include?('ASC') ? 'desc' : 'asc'}")
   -%>
 </td>
 <td>
   <% if @sort_by.include?('name') -%>
-    <%= @sort_by.include?('ASC') ? t("asc") : t("desc") %>
+    <%= @sort_by.include?('ASC') ? t('ext.search.asc') : t('ext.search.desc') %>
   <% end -%>
 </td>
 
 <td>&nbsp;</td>
 
 <td>
-  <%= link_to t("price"),
+  <%= link_to t('price'),
     temp.merge(:sort => "price_#{@sort_by.include?('ASC') ? 'desc' : 'asc'}")
   -%>
 </td>
 <td>
   <% if @sort_by.include?('master_price') -%>
-    <%= @sort_by.include?('ASC') ? t("asc") : t("desc") %>
+    <%= @sort_by.include?('ASC') ? t('ext.search.asc') : t('ext.search.desc') %>
   <% end -%>
 </td>
 
 <td>&nbsp;</td>
 
 <td class="sort_item">
-  <%= link_to t("date"),
+  <%= link_to t('date'),
     temp.merge(:sort => "date_#{@sort_by.include?('ASC') ? 'desc' : 'asc'}")
   -%>
 </td>
 <td>
   <% if @sort_by.include?('available_on') -%>
-    <%= @sort_by.include?('ASC') ? t("asc") : t("desc") %>
+    <%= @sort_by.include?('ASC') ? t('ext.search.asc') : t('ext.search.desc') %>
   <% end -%>
 </td>
 

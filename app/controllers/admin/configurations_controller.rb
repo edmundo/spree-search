@@ -3,9 +3,9 @@ class Admin::ConfigurationsController < Admin::BaseController
 
   def add_search_link
     @extension_links << {
-      :link =>  '#' ,
-      :link_text => Globalite.localize(:ext_search),
-      :description => Globalite.localize(:ext_search_description)
+      :link => '#' ,
+      :link_text => t('ext.search.extension_name'),
+      :description => t('ext.search.extension_description')
     }
   end
 end

@@ -31,10 +31,6 @@ class SearchExtension < Spree::Extension
         end
       end
     end
-
-    # Add support for internationalization to this extension.
-    Globalite.add_localization_source(File.join(RAILS_ROOT, 'vendor/extensions/search/lang/ui'))
-
   end
   
   def self.require_gems(config)
