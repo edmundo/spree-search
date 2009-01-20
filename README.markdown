@@ -8,7 +8,7 @@ This is an extension that adds sort and search support for products inside Spree
 You need to uncomment two methods (that builds the products collection) on search_extension.rb to make simple search work.
 
 ## Actual state
-Production ready.
+Production ready. Updated to work with the latest i18n code.
 
 ## Functionality
 It includes basic name search that is suggested to be putted in a layout. It can be used in the main page or inside a taxon.
