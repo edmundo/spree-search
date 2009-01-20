@@ -1,6 +1,6 @@
 <!-- search box -->
 <% if controller.controller_name == 'taxons'
-  search_path_local = taxon_path(params[:id])
+  search_path_local = seo_url(@taxon)
 else
   search_path_local = products_path
 end -%>
