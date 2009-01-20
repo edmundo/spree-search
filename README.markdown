@@ -10,7 +10,7 @@ You need to uncomment two methods (that builds the products collection) on searc
 ## Actual state
 Production ready.
 
-# Functionality
+## Functionality
 It includes basic name search that is suggested to be putted in a layout. It can be used in the main page or inside a taxon.
 It can be tested using the following route:
 /search/test
@@ -21,10 +21,13 @@ It can be tested using the following route:
 
 It has basic sort support for products, by default the only view that has it working is the result of the extended search, but it can be included in all the rest of the application including the main view and the view by current taxon.
 
-#gems needed
+## gems needed
 activerecord-tableless
 
-#Screenshots
+## Code inside app to be mixed
+I'm not using code inside the search_extension.rb file using class_eval anymore, look at the last commits here `http://github.com/edmundo/spree/tree/app_override` to make the code inside app used in this extension be mixed automatically.
+
+## Screenshots
 
 Samples to show what you can do with it, (layout customization is not included).
 
