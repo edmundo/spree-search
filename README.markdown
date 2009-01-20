@@ -25,7 +25,7 @@ It has basic sort support for products, by default the only view that has it wor
 activerecord-tableless
 
 ## Code inside app to be mixed
-I'm not using code inside the search_extension.rb file using class_eval anymore, look at the last commits here `http://github.com/edmundo/spree/tree/app_override` to make the code inside app used in this extension be mixed automatically.
+I'm not using code inside the `search_extension.rb` file using `class_eval` anymore, look at the last commits here `http://github.com/edmundo/spree/tree/app_override` to make the code inside app used in this extension be mixed automatically.
 
 ## Screenshots
 
