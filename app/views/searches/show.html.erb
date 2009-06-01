@@ -4,5 +4,5 @@
 
 <%= render :partial => "shared/products.html.erb", :locals => {:products => @products, :taxon => @taxon } %>
 
-<%= render :partial => "shared/advanced_search_sort_bar" %>
+<%= render :partial => "shared/sort_bar" %>
 <%= page_links(maintain_search_params.merge(:prev => "&#171; #{t('previous')}", :next => "#{t('next')} &#187;")) if @search.page_count > 1 %>

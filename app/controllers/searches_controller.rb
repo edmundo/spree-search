@@ -44,9 +44,6 @@ class SearchesController < Spree::BaseController
     # If setted to default, clean the param it doesn't need to clutter the url.
     params[:sort] = nil if @sort_by_and_as == ["available_on", "DESC"]
 
-#    @search_param = "- #{t('ext.search.searching_by', :search_term => params[:keywords])}" if params[:keywords]
-
-
     @search = Product.active.new_search(params[:search])
 
     if params[:taxon]
