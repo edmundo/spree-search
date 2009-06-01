@@ -8,45 +8,39 @@
 <td>&nbsp;</td>
 
 <td>
-  <%= link_to t('name'), {
-    :search => params[:search],
-    :sort => "name_#{@sort_by.include?('ASC') ? 'desc' : 'asc'}",
-    :p => params[:p]
-  } -%>
+  <%= link_to t('name'),
+    maintain_search_params.merge(:sort => "name_#{@sort_by_and_as[1].include?('ASC') ? 'desc' : 'asc'}")
+  -%>
 </td>
 <td>
-  <% if @sort_by.include?('name') -%>
-    <%= @sort_by.include?('ASC') ? t('ext.search.asc') : t('ext.search.desc') %>
+  <% if @sort_by_and_as[0].include?('name') -%>
+    <%= @sort_by_and_as[1].include?('ASC') ? t('ext.search.asc') : t('ext.search.desc') %>
   <% end -%>
 </td>
 
 <td>&nbsp;</td>
 
 <td>
-  <%= link_to t('price'), {
-    :search => params[:search],
-    :sort => "price_#{@sort_by.include?('ASC') ? 'desc' : 'asc'}",
-    :p => params[:p]
-  } -%>
+  <%= link_to t('price'),
+    maintain_search_params.merge(:sort => "price_#{@sort_by_and_as[1].include?('ASC') ? 'desc' : 'asc'}")
+  -%>
 </td>
 <td>
-  <% if @sort_by.include?('master_price') -%>
-    <%= @sort_by.include?('ASC') ? t('ext.search.asc') : t('ext.search.desc') %>
+  <% if @sort_by_and_as[0].include?('master_price') -%>
+    <%= @sort_by_and_as[1].include?('ASC') ? t('ext.search.asc') : t('ext.search.desc') %>
   <% end -%>
 </td>
 
 <td>&nbsp;</td>
 
 <td class="sort_item">
-  <%= link_to t('date'), {
-    :search => params[:search],
-    :sort => "name_#{@sort_by.include?('ASC') ? 'desc' : 'asc'}",
-    :p => params[:p]
-  } -%>
+  <%= link_to t('ext.search.date'),
+    maintain_search_params.merge(:sort => "date_#{@sort_by_and_as[1].include?('ASC') ? 'desc' : 'asc'}")
+  -%>
 </td>
 <td>
-  <% if @sort_by.include?('available_on') -%>
-    <%= @sort_by.include?('ASC') ? t('ext.search.asc') : t('ext.search.desc') %>
+  <% if @sort_by_and_as[0].include?('available_on') -%>
+    <%= @sort_by_and_as[1].include?('ASC') ? t('ext.search.asc') : t('ext.search.desc') %>
   <% end -%>
 </td>
 

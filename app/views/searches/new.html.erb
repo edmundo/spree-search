@@ -4,6 +4,8 @@
   </td>
 <% end %>
 
+<%= error_messages_for :search %>
+
 <% form_for @search do |f| %>
   <p>
     <%= t('ext.search.keywords') %>:<br/>

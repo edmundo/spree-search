@@ -1,8 +1,8 @@
-class ProductsController < Spree::BaseController
-# Uncomment this method to make the simple search work for products.
+class TaxonsController < Spree::BaseController
+# Uncomment this method to make the simple search work inside taxons.
   private
 
-  def collection
+  def load_data
     # Define what is allowed.
     sort_params = {
       "price_asc" => ["master_price", "ASC"],
@@ -19,7 +19,7 @@ class ProductsController < Spree::BaseController
 
 #    @search_param = "- #{t('ext.search.searching_by', :search_term => params[:keywords])}" if params[:keywords]
 
-    @search = Product.active.new_search(params[:search])
+    @search = object.products.active.new_search(params[:search])
     @search.order_by = @sort_by_and_as[0]
     @search.order_as = @sort_by_and_as[1]
     @search.conditions.name_contains = params[:keywords]

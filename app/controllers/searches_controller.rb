@@ -5,14 +5,16 @@ class SearchesController < Spree::BaseController
   def test
   end
   
+  # Create a search object to receive parameters of the form to validate.
   def new
     @search = Search.new
   end
   
+  # Validates the search object and redirect to show action renaming the parameters to not clash with searchlogic.
   def create
     @search = Search.new(params[:search])
     if @search.valid?
-      
+
       # Build the custom parameters hash and don't clutter the url with empty params.
       temp = {}
       temp.merge!(:taxon => params["search"]["taxon_id"]) if !params["search"]["taxon_id"].empty?
@@ -20,7 +22,7 @@ class SearchesController < Spree::BaseController
       temp.merge!(:min_price => params["search"]["min_price"]) if !params["search"]["min_price"].empty?
       temp.merge!(:max_price => params["search"]["max_price"]) if !params["search"]["max_price"].empty?
       temp.merge!(:keywords => params["search"]["keywords"]) if !params["search"]["keywords"].empty?
-      
+
       redirect_to temp.merge(:action => 'show')
     else
       render :action => 'new'
@@ -28,76 +30,50 @@ class SearchesController < Spree::BaseController
   end
   
   def show
-    products_per_page = 4
-
-    @search = Search.new({
-      :taxon_id => params[:taxon],
-      :subtaxons => params[:subtaxons],
-      :min_price => params[:min_price],
-      :max_price => params[:max_price],
-      :keywords => params[:keywords]
-    })
-    # Verify if theres any ondition.
-    conditions = @search.conditions
-    if conditions == [""]
-      conditions = ""
-    end
-
-
     # Define what is allowed.
     sort_params = {
-      "price_asc" => "master_price ASC",
-      "price_desc" => "master_price DESC",
-      "date_asc" => "available_on ASC",
-      "date_desc" => "available_on DESC",
-      "name_asc" => "name ASC",
-      "name_desc" => "name DESC"
+      "price_asc" => ["master_price", "ASC"],
+      "price_desc" => ["master_price", "DESC"],
+      "date_asc" => ["available_on", "ASC"],
+      "date_desc" => ["available_on", "DESC"],
+      "name_asc" => ["name", "ASC"],
+      "name_desc" => ["name", "DESC"]
     }
     # Set it to what is allowed or default.
-    @sort_by = sort_params[params[:sort]] || "available_on DESC"
-    
-    @search_param = "- #{t('ext.search.searching_by', :search_term => params[:search])}" if params[:search]
+    @sort_by_and_as = sort_params[params[:sort]] || ["available_on", "DESC"]
+    # If setted to default, clean the param it doesn't need to clutter the url.
+    params[:sort] = nil if @sort_by_and_as == ["available_on", "DESC"]
 
-    an_array = []
-    add_subtaxons(an_array, Taxon.find(@search.taxon_id)) if @search.taxon_id
-    
-    count_query = "
-      SELECT count(products.id) FROM products
-      INNER JOIN products_taxons ON (products.id = products_taxons.product_id)
-      INNER JOIN taxons ON (products_taxons.taxon_id = taxons.id)
-      WHERE taxons.id IN (#{an_array.join(',').to_s})
-      #{(conditions.empty? ? "" : " AND ")} #{conditions}"
-            
-    query = "
-      SELECT products.* FROM products
-      INNER JOIN products_taxons ON (products.id = products_taxons.product_id)
-      INNER JOIN taxons ON (products_taxons.taxon_id = taxons.id)
-      WHERE taxons.id IN (#{an_array.join(',').to_s})
-      #{(conditions.empty? ? "" : " AND ")} #{conditions} ORDER BY #{@sort_by}"
- 
- 
-    if @search.taxon_id
-      if @search.subtaxons
-        @products ||= Product.paginating_sql_find(
-          count_query, query, {:page_size => products_per_page, :current => params[:p]}
-        )
+#    @search_param = "- #{t('ext.search.searching_by', :search_term => params[:keywords])}" if params[:keywords]
+
+
+    @search = Product.active.new_search(params[:search])
+
+    if params[:taxon]
+      if params[:subtaxons]
+        an_array = []
+
+        a_taxon = Taxon.first(:conditions => {:id_is => params[:taxon]})
+        add_subtaxons(an_array, a_taxon) if a_taxon
+
+        @search.conditions.taxons.id_equals = an_array
       else
-        @products ||= Taxon.find(@search.taxon_id).products.available.find(
-          :all,
-          :conditions => conditions,
-          :order => @sort_by,
-          :page => {:start => 1, :size => products_per_page, :current => params[:p]},
-          :include => :images)
+        @search.conditions.taxons.id_equals = params[:taxon]
       end
-    else
-      @products ||= Product.available.by_name(params[:search]).find(
-        :all,
-        :conditions => conditions,
-        :order => @sort_by,
-        :page => {:start => 1, :size => products_per_page, :current => params[:p]},
-        :include => :images)
     end
-  end
+
+
+    @search.order_by = @sort_by_and_as[0]
+    @search.order_as = @sort_by_and_as[1]
+    @search.conditions.name_contains = params[:keywords]
+    @search.conditions.master_price_greater_than_or_equal_to = params[:min_price]
+    @search.conditions.master_price_less_than_or_equal_to = params[:max_price]
+    @search.per_page = Spree::Config[:products_per_page]
+    @search.include = :images
+
+    @product_cols = 3
+    @products ||= @search.all
+end
 
 
   private

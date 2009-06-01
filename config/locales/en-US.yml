@@ -18,3 +18,4 @@ en-US:
       searching_by: Searching for '{{search_term}}'
       send: Send
       sort_by: Sort by
+      date: Date

@@ -1,14 +1,3 @@
-<%
-  # Build the custom parameters hash and don't clutter the url with empty params.
-  temp = {}
-  temp.merge!(:taxon => params[:taxon]) if !params[:taxon].nil? && !params[:taxon].empty?
-  temp.merge!(:subtaxons => params[:subtaxons]) if params[:subtaxons] != "0"
-  temp.merge!(:min_price => params[:min_price]) if !params[:min_price].nil? && !params[:min_price].empty?
-  temp.merge!(:max_price => params[:max_price]) if !params[:max_price].nil? && !params[:max_price].empty?
-  temp.merge!(:keywords => params[:keywords]) if !params[:keywords].nil? && !params[:keywords].empty?
-  temp.merge!(:p => params[:p]) if !params[:p].nil? && !params[:p].empty?
-%>
-
 <table>
 <tr>
 
@@ -20,12 +9,12 @@
 
 <td>
   <%= link_to t('name'),
-    temp.merge(:sort => "name_#{@sort_by.include?('ASC') ? 'desc' : 'asc'}")
+    maintain_search_params.merge(:sort => "name_#{@sort_by_and_as[1].include?('ASC') ? 'desc' : 'asc'}")
   -%>
 </td>
 <td>
-  <% if @sort_by.include?('name') -%>
-    <%= @sort_by.include?('ASC') ? t('ext.search.asc') : t('ext.search.desc') %>
+  <% if @sort_by_and_as[0].include?('name') -%>
+    <%= @sort_by_and_as[1].include?('ASC') ? t('ext.search.asc') : t('ext.search.desc') %>
   <% end -%>
 </td>
 
@@ -33,25 +22,25 @@
 
 <td>
   <%= link_to t('price'),
-    temp.merge(:sort => "price_#{@sort_by.include?('ASC') ? 'desc' : 'asc'}")
+    maintain_search_params.merge(:sort => "price_#{@sort_by_and_as[1].include?('ASC') ? 'desc' : 'asc'}")
   -%>
 </td>
 <td>
-  <% if @sort_by.include?('master_price') -%>
-    <%= @sort_by.include?('ASC') ? t('ext.search.asc') : t('ext.search.desc') %>
+  <% if @sort_by_and_as[0].include?('master_price') -%>
+    <%= @sort_by_and_as[1].include?('ASC') ? t('ext.search.asc') : t('ext.search.desc') %>
   <% end -%>
 </td>
 
 <td>&nbsp;</td>
 
 <td class="sort_item">
-  <%= link_to t('date'),
-    temp.merge(:sort => "date_#{@sort_by.include?('ASC') ? 'desc' : 'asc'}")
+  <%= link_to t('ext.search.date'),
+    maintain_search_params.merge(:sort => "date_#{@sort_by_and_as[1].include?('ASC') ? 'desc' : 'asc'}")
   -%>
 </td>
 <td>
-  <% if @sort_by.include?('available_on') -%>
-    <%= @sort_by.include?('ASC') ? t('ext.search.asc') : t('ext.search.desc') %>
+  <% if @sort_by_and_as[0].include?('available_on') -%>
+    <%= @sort_by_and_as[1].include?('ASC') ? t('ext.search.asc') : t('ext.search.desc') %>
   <% end -%>
 </td>
 
